@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: resshaikdblb
+  name: resshaikdblb
+  namespace: resshaik-ns # namespace info 
+spec:
+  ports:
+  - name: 3306-3306
+    port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector: # will create ep by using label of pods 
+    app: resshaikdb # label of pods 
+  type: ClusterIP
+status:
+  loadBalancer: {}

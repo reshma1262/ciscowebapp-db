@@ -1,7 +1,7 @@
 apiVersion: v1
 data:
   MYSQL_DATABASE: resshaikdb
-  MYSQL_USER: resshaikuser"
+  MYSQL_USER: resshaikuser
 kind: ConfigMap
 metadata:
   creationTimestamp: null

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: resshaikweblb1
+  name: resshaikweblb1
+  namespace: resshaik-ns
+spec:
+  ports:
+  - name: 1234-80
+    port: 1234
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: resshaik-app # label of pods 
+  type: NodePort
+status:
+  loadBalancer: {}

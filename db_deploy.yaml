@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: resshaikdb
+  name: resshaikdb
+  namespace: resshaik-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resshaikdb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: resshaikdb
+    spec:
+      volumes: #create vols
+      - name: resshaikdbvol
+        hostPath: 
+         path: /data/resshaikdb
+         type: DirectoryOrCreate 
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        ports:
+        - containerPort: 3306
+        envFrom: #to call env var
+        - configMapRef:
+           name: resshaikdb-config
+        env: # call othe env
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: resshaikdb-sec
+              key: db_pass
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: resshaikdb-sec
+              key: root_pass
+        resources: {}
+        volumeMounts: #to mount vol
+        - name: resshaikdbvol
+          mountPath: /var/lib/mysql/
+status: {}

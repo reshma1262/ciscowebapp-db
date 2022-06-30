@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: resshaik-app
+  name: resshaik-app
+  namespace: resshaik-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resshaik-app
+  strategy: {}
+  template: # pod info 
+    metadata:
+      creationTimestamp: null
+      labels: # label of pods
+        app: resshaik-app
+    spec:
+      containers:
+      - image: wordpress
+        name: wordpress
+        ports:
+        - containerPort: 80
+        envFrom: # calling docker image env variables 
+        - configMapRef:
+           name: resshaikweb-config 
+        env: # to call password from secret 
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom: # taking data from secret 
+           secretKeyRef:
+            name: resshaikdb-sec
+            key: db_pass 
+
+        resources: {}
+status: {}
